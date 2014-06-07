@@ -56,6 +56,35 @@ sudo rm -r -f "/CannyOS/build/cannyos-user-storage-dropbox/*"
 sudo docker stop cannyos-user-storage-dropbox
 sudo docker rm cannyos-user-storage-dropbox
 
+# Get peramiters for logging into dropbox
+echo ""
+echo "*********************************************************************************************************************************\n"
+echo "*                                                                                                                               *\n"
+echo "* Goto https://www.dropbox.com/developers/apps and create a dropbox api app                                                     *\n"
+echo "* Please enter app_key                                                                                                          *\n"
+echo "*                                                                                                                               *\n"
+echo "*********************************************************************************************************************************\n"
+read app_key
+echo ""
+echo "*********************************************************************************************************************************\n"
+echo "*                                                                                                                               *\n"
+echo "* Goto https://www.dropbox.com/developers/apps and create a dropbox api app                                                     *\n"
+echo "* Please enter app_secret                                                                                                       *\n"
+echo "*                                                                                                                               *\n"
+echo "*********************************************************************************************************************************\n"
+echo ""
+read app_secret
+echo ""
+echo "*********************************************************************************************************************************\n"
+echo "*                                                                                                                               *\n"
+echo "* Goto https://www.dropbox.com/1/oauth2/authorize?response_type=code&client_id=$app_key and create a dropbox api app *\n"
+echo "* Please enter authorization_code                                                                                               *\n"
+echo "*                                                                                                                               *\n"
+echo "*********************************************************************************************************************************\n"
+echo ""
+echo ""
+read authorization_code
+
 # Launch built base container image
 sudo docker run -i -t --rm \
  --privileged=true --lxc-conf="native.cgroup.devices.allow = c 10:229 rwm" \
@@ -64,7 +93,7 @@ sudo docker run -i -t --rm \
  --user "root" \
  -p 222:22 \
  intlabs/cannyos-user-storage-dropbox \
- new app_key app_secret authorization_code
+ new $app_key $app_secret $authorization_code
 
 echo ""
 echo "*****************************************************"
