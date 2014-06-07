@@ -56,77 +56,32 @@ sudo rm -r -f "/CannyOS/build/cannyos-user-storage-dropbox/*"
 sudo docker rm cannyos-user-storage-dropbox
 
 # Launch built base container image
-sudo docker run -i -t -d \
+sudo docker run -i -t --rm \
  --privileged=true --lxc-conf="native.cgroup.devices.allow = c 10:229 rwm" \
  --volume "/CannyOS/build/cannyos-user-storage-dropbox":"/CannyOS/Host" \
  --name "cannyos-user-storage-dropbox" \
  --user "root" \
- intlabs/cannyos-user-storage-dropbox
+ -p 222:22 \
+ intlabs/cannyos-user-storage-dropbox \
+ new <app_key> <app_secret> <authorization_code>
 
 echo ""
 echo "*****************************************************"
 echo "*                                                   *"
-echo "*         Launched base container image             *"
-echo "*                                                   *"
-echo "*****************************************************"
-echo ""
-
-# Wait for post-install script to finish running (Currently time out at ) 
-x=0
-while [ "$x" -lt 43200 -a ! -e "/CannyOS/build/cannyos-user-storage-dropbox/done" ]; do
-   x=$((x+1))
-   sleep 1.0
-   echo -n "Post Install script run time: $x seconds"
-done
-if [ -e "/CannyOS/build/cannyos-user-storage-dropbox/done" ]
-then
-	echo ""
-	echo "*****************************************************"
-	echo "*                                                   *"
-	echo "*   host detected post install script competion     *"
-	echo "*                                                   *"
-	echo "*****************************************************"
-	echo ""
-
-else
-	echo ""
-	echo "*****************************************************"
-	echo "*                                                   *"
-	echo "*         Post install script timeout               *"
-	echo "*                                                   *"
-	echo "*****************************************************"
-	echo ""
-fi
-
-#Get the container id
-CONTAINERID=$(sudo docker ps | grep "cannyos-user-storage-dropbox" | head -n 1 | awk 'BEGIN { FS = "[ \t]+" } { print $1 }' )
-
-#Commit the container image
-sudo docker commit -m="Installed FUSE" -a="Pete Birley" $CONTAINERID intlabs/cannyos-user-storage-dropbox-post-install
-
-# Shut down the base image
-sudo docker stop cannyos-user-storage-dropbox
-
-echo ""
-echo "*****************************************************"
-echo "* Success                                           *"
 echo "* CannyOS/cannyos-user-storage-dropbox-post-install *"
 echo "*                                           created *"
 echo "*****************************************************"
 echo ""
 
-
-# Make shared directory on host
-sudo mkdir -p "/CannyOS/build/cannyos-user-storage-dropbox-post-install"
-# Ensure that there it is clear
-sudo rm -r -f "/CannyOS/build/cannyos-user-storage-dropbox-post-install/*"
-
-# Remove any old containers
-sudo docker rm dockerfile-cannyos-ubuntu-14_04-fuse
-
-sudo docker run -i -t --rm \
- --privileged=true --lxc-conf="native.cgroup.devices.allow = c 10:229 rwm" \
- --volume "/CannyOS/build/cannyos-user-storage-dropbox-post-install":"/CannyOS/Host" \
- --name "cannyos-user-storage-dropbox-post-install" \
- --user "root" \
- intlabs/cannyos-user-storage-dropbox-post-install
+echo "********************************************************************************"
+echo "*                                                                              *"
+echo "*  launch using: (for an existing connection)                                  *"
+echo "*          -this currently has permission problems on reconnection             *"
+echo "*                                                                              *"
+echo "********************************************************************************"
+echo ""
+echo "sudo docker run -it --rm -p 222:22 -p 111:111 -p 2049:2049 \\"
+echo "--privileged=true --lxc-conf=\"native.cgroup.devices.allow = c 10:229 rwm\" \\"
+echo "--name test --hostname test \\"
+echo "-v /var/user-storage intlabs/dockerfile-ubuntu-fileserver \\"
+echo "existing <access_token>"
