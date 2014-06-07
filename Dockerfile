@@ -35,7 +35,7 @@ WORKDIR /
 #****************************************************
 
 #Allow remote root login with password
-sed -i -e 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config && /etc/init.d/ssh restart
+RUN sed -i -e 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config && /etc/init.d/ssh restart
 
 # Install official dropbox command line utilities
 ADD http://www.dropbox.com/download?dl=packages/dropbox.py /bin/dropbox.py

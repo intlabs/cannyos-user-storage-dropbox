@@ -64,7 +64,7 @@ sudo docker run -i -t --rm \
  --user "root" \
  -p 222:22 \
  intlabs/cannyos-user-storage-dropbox \
- new <app_key> <app_secret> <authorization_code>
+ new app_key app_secret authorization_code
 
 echo ""
 echo "*****************************************************"
