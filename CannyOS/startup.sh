@@ -122,7 +122,7 @@ fi
 
 if [ "$mode" = "existing" ]; then
 	#Store access token
-	echo $access_token >> /ff4d/ff4d.config
+	echo $access_token >> /CannyOS/Storage/Dropbox/ff4d.config
 fi
 
 
