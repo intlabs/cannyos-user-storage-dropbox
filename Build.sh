@@ -53,6 +53,7 @@ sudo mkdir -p "/CannyOS/build/cannyos-user-storage-dropbox"
 sudo rm -r -f "/CannyOS/build/cannyos-user-storage-dropbox/*"
 
 # Remove any old containers
+sudo docker stop cannyos-user-storage-dropbox
 sudo docker rm cannyos-user-storage-dropbox
 
 # Launch built base container image
