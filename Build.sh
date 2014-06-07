@@ -77,7 +77,7 @@ read app_secret
 echo ""
 echo "*********************************************************************************************************************************\n"
 echo "*                                                                                                                               *\n"
-echo "* Goto https://www.dropbox.com/1/oauth2/authorize?response_type=code&client_id=$app_key and create a dropbox api app *\n"
+echo "* Goto https://www.dropbox.com/1/oauth2/authorize?response_type=code&client_id=$app_key and create a dropbox api app      *\n"
 echo "* Please enter authorization_code                                                                                               *\n"
 echo "*                                                                                                                               *\n"
 echo "*********************************************************************************************************************************\n"
