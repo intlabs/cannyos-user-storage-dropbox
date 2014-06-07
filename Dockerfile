@@ -34,6 +34,9 @@ WORKDIR /
 #                                                   *
 #****************************************************
 
+#Allow remote root login with password
+sed -i -e 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config && /etc/init.d/ssh restart
+
 # install official dropbox comand line utilities
 ADD http://www.dropbox.com/download?dl=packages/dropbox.py /bin/dropbox.py
 
@@ -71,12 +74,6 @@ RUN chmod +x /CannyOS/startup.sh
 # Add post-install script
 #ADD /CannyOS/post-install.sh /CannyOS/post-install.sh
 #RUN chmod +x /CannyOS/post-install.sh
-
-# Define mountable directories.
-VOLUME ["/data"]
-
-# Define working directory.
-WORKDIR /data
 
 # Define default command.
 ENTRYPOINT ["/CannyOS/startup.sh"]

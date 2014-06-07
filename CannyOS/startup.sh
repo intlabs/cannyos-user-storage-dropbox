@@ -114,17 +114,10 @@ echo "*                                                                         
 echo "********************************************************************************"
 echo ""
 
-
-#Install fuse - this is a really ugly hack to deal with fuse during development
-apt-get install -y fuse
-
-#Allow remote root login with password
-sed -i -e 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config && /etc/init.d/ssh restart
-
 # Parse Command line entry
 if [ "$mode" = "new" ]; then
 	#Get a new access token
-	/ff4d/getDropboxAccessToken.py -ak $app_key -as $app_secret -c $authorization_code 
+	/CannyOS/Storage/Dropbox/getDropboxAccessToken.py -ak $app_key -as $app_secret -c $authorization_code 
 fi
 
 if [ "$mode" = "existing" ]; then
@@ -134,7 +127,7 @@ fi
 
 
 #Launch Dropbox FUSE
-/ff4d/ff4d.py -ar -bg /mnt/dropbox 
+/CannyOS/Storage/Dropbox/ff4d.py -ar -bg /mnt/dropbox 
 
 echo ""
 echo "*****************************************************"
