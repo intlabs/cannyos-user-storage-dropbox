@@ -28,10 +28,41 @@ ENV DEBIAN_FRONTEND noninteractive
 # Set the working directory
 WORKDIR /
 
-# DO stuff
+#****************************************************
+#                                                   *
+#         INSERT COMMANDS BELLOW THIS               *
+#                                                   *
+#****************************************************
 
-RUN apt-get install -y nano
+# install official dropbox comand line utilities
+ADD http://www.dropbox.com/download?dl=packages/dropbox.py /bin/dropbox.py
 
+#Install fuse dropbox utility support packages:
+RUN apt-get install -y libfuse2 python-pkg-resources python-pip
+
+#Install ff4d for CannyOS
+WORKDIR /
+ADD CannyOS/Storage/Dropbox/* CannyOS/Storage/Dropbox/
+WORKDIR /CannyOS/Storage/Dropbox
+RUN pip install dropbox
+
+#Make mountpoint
+RUN mkdir -p /mnt/dropbox
+
+#****************************************************
+#                                                   *
+#         ONLY PORT RULES BELLOW THIS               *
+#                                                   *
+#****************************************************
+
+#SSH
+EXPOSE 22/tcp
+
+#****************************************************
+#                                                   *
+#         NO COMMANDS BELLOW THIS                   *
+#                                                   *
+#****************************************************
 
 # Add startup 
 ADD /CannyOS/startup.sh /CannyOS/startup.sh
