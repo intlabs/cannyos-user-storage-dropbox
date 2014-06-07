@@ -46,8 +46,8 @@ RUN apt-get install -y libfuse2 python-pkg-resources python-pip
 #Install ff4d for CannyOS
 WORKDIR /
 ADD CannyOS/Storage/Dropbox CannyOS/Storage/Dropbox
-RUN chmod +x *
 WORKDIR /CannyOS/Storage/Dropbox
+RUN chmod +x *
 RUN pip install dropbox
 
 #Make mountpoint
